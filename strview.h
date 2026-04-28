@@ -2,7 +2,7 @@
  * strview.h
  * Version: 0.1.0
  * License: MIT
- * Repository: https://github.com/iamkotovsky/strview_c
+ * Repository: https://github.com/iamkotovsky/strview
  * Description: Small single-header string view library for C.
  *
  * Define STRVIEW_IMPLEMENTATION in exactly one translation unit before
