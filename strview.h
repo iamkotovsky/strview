@@ -1,6 +1,6 @@
 /*
  * strview.h
- * Version: 0.1.0
+ * Version: 0.1.1
  * License: MIT
  * Repository: https://github.com/iamkotovsky/strview
  * Description: Small single-header string view library for C.
@@ -79,8 +79,11 @@ strview_t strview_trim_right(strview_t str);
 /* Trim ASCII whitespace from both ends of str. */
 strview_t strview_trim(strview_t str);
 
+/* Copy into dest. */
+size_t strview_copy(char *dest, size_t dest_size, strview_t src);
+
 /* Copy into dest and NUL-terminate when dest_size is non-zero. */
-size_t strview_copy(char *dest, size_t dest_size, strview_t str);
+size_t strview_to_cstr(char *dest, size_t dest_size, strview_t src);
 
 /*
  * Iterate str split by separator using part as iteration state.
@@ -213,22 +216,26 @@ strview_t strview_trim(strview_t str) {
     return strview_trim_right(strview_trim_left(str));
 }
 
-size_t strview_copy(char *dest, size_t dest_size, strview_t str) {
-    size_t copy_length = str.length;
-
-    if (dest == NULL || dest_size == 0U) {
-        return 0U;
+size_t strview_copy(char *dest, size_t dest_size, strview_t src) {
+    if (dest == NULL || dest_size == 0 || src.length == 0) {
+        return 0;
     }
 
-    if (copy_length >= dest_size) {
-        copy_length = dest_size - 1U;
+    size_t copy_length = src.length < dest_size ? src.length : dest_size;
+    memcpy(dest, src.data, copy_length);
+
+    return copy_length;
+}
+
+size_t strview_to_cstr(char *dest, size_t dest_size, strview_t src) {
+    if (dest == NULL || dest_size == 0) {
+        return 0;
     }
 
-    if (copy_length > 0U) {
-        memcpy(dest, str.data, copy_length);
-    }
+    size_t copy_length = src.length < dest_size ? src.length : dest_size - 1;
+    strview_copy(dest, dest_size - 1, src);
+    dest[copy_length] = 0;
 
-    dest[copy_length] = '\0';
     return copy_length;
 }
 
