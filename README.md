@@ -19,20 +19,20 @@ In one translation unit:
 
 ```c
 #define STRVIEW_IMPLEMENTATION
-#include "strview.h"
+#include "strview/strview.h"
 ```
 
 In other files:
 
 ```c
-#include "strview.h"
+#include "strview/strview.h"
 ```
 
 ## Example
 
 ```c
 #define STRVIEW_IMPLEMENTATION
-#include "strview.h"
+#include "strview/strview.h"
 
 #include <stdio.h>
 
