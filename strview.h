@@ -21,8 +21,10 @@ typedef struct strview {
 } strview_t;
 
 #define STRVIEW_NPOS ((size_t)-1)
+#define STRVIEW_INIT(cstr)                                                     \
+    { (cstr), (sizeof(cstr) / sizeof((cstr)[0])) - 1 }
 #define STRVIEW_LIT(cstr)                                                      \
-    strview_from_parts((cstr), (sizeof(cstr) / sizeof((cstr)[0])) - 1U)
+    ((strview_t)STRVIEW_INIT(cstr))
 
 static inline strview_t strview_from_parts(const char *data, size_t length) {
     strview_t view;

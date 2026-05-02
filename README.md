@@ -10,6 +10,7 @@ allocate memory and does not modify the underlying bytes.
 - Non-owning `strview_t { const char *data; size_t length; }`
 - Single-header library with implementation block
 - No dynamic allocation
+- Literal macros for expression and static-initializer contexts
 - Basic compare, search, slicing, trimming, copying, and splitting
 
 ## Integration
@@ -49,6 +50,12 @@ int main(void) {
 }
 ```
 
+For static initializers, use `STRVIEW_INIT`:
+
+```c
+static const strview_t name = STRVIEW_INIT("name");
+```
+
 ## Split Contract
 
 `strview_split()` uses `part` as iteration state.
@@ -61,6 +68,8 @@ int main(void) {
 
 - `strview_from_parts`
 - `strview_from_cstr`
+- `STRVIEW_INIT`
+- `STRVIEW_LIT`
 - `strview_is_empty`
 - `strview_compare`
 - `strview_equals`
